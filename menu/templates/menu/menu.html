@@ -4,13 +4,26 @@
 {% endblock %}
 
 {% block content %}
-    <div class="cnotainer">
+    <div class="container" style="margin-top: 50px">
         <div class="row">
-        <div class="col-12">
-            <h1>
-                Menu
-            </h1>
+            <div class="col-12">
+                <h1>
+                    Menu
+                </h1>
+                <div class="container" style="display: flex" >
+                    {% for food in object_list %}
+                        <div class="col-md-3">
+                            <div class="card" style="width: 18rem;box-shadow: 0 0 15px rgba(0,0,0,0.45); background-color: #fd7e14;color: aliceblue">
+                            <img src="{{ food.img }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ food.name }}</h5>
+                                <p class="card-text">{{ food.composition }}</p>
+                            </div>
+                        </div>
+                        </div>
+                    {% endfor %}
+            </div>
         </div>
-        </div>
+    </div>
     </div>
 {% endblock %}
