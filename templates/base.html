@@ -18,9 +18,17 @@
     </title>
 </head>
 <style>
-    a {
-        color: aliceblue
+    #number {
+        font-size: 48px;
+        font-family: "Ubuntu Mono";
+        margin-left: 200px;
     }
+
+    a {
+        color: aliceblue;
+        text-decoration: none;
+    }
+
     a:hover {
         color: #FF3500;
     }
@@ -33,22 +41,34 @@
                      alt="pizza-logo" width="120" height="120" class="d-inline-block align-top">
             </a>
         </div>
-        <div class="navbar-brand" style="margin-top: 12px">
-            <h4 class="display-3">
+        <div class="navbar-brand" style="margin-top: 35px">
+            <h4 class="display-5">
                 PIZZA
             </h4>
+        </div>
+        <div id="number" class="nav " style="margin-top: 25px">
+            <a href="" class="nav-link justify-content-end" style="color: #fd7e14;">
+                +7(776)XXX-XX-XX
+            </a>
         </div>
     </div>
     <nav class="nav navbar-expand-lg navbar navbar-dark justify-content-center  flex-column flex-sm-row"
          style="background-color: #fd7e14; font-size: 26px; border-radius: 40px; box-shadow: 0 0 15px rgba(0,0,0,0.45);margin-top: 30px">
-        <a class="flex-sm-fill text-sm-center nav-link " aria-current="page"  href="{% url 'menu:menu' %}">Меню</a>
+        <a class="flex-sm-fill text-sm-center nav-link " aria-current="page" href="{% url 'menu:menu' %}">Меню</a>
         <a class="flex-sm-fill text-sm-center nav-link" href="#">Longer nav link</a>
-        <a class="flex-sm-fill text-sm-center nav-link"  href="#">Link</a>
-        <a class="flex-sm-fill text-sm-center nav-link "  href="{% url 'about:about' %}">О нас</a>
+        <a class="flex-sm-fill text-sm-center nav-link" href="#">Link</a>
+        <a class="flex-sm-fill text-sm-center nav-link " href="">О нас</a>
     </nav>
 </div>
 <body>
 {% block content %}
 {% endblock %}
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
 </body>
 </html>
