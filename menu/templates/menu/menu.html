@@ -4,6 +4,21 @@
 {% endblock %}
 
 {% block content %}
+    <style>
+    #food {
+        width: 18rem;
+        color: aliceblue;
+        background-color: #fd7e14;
+        transition: .1s ease-out;
+        transition-delay: 0.1s;
+    }
+    #food:hover {
+        background-color: #FF3500;
+        box-shadow: 0 0 15px rgba(0,0,0,0.65);
+        transition: .1s ease-out;
+        transition-delay: 0.2s;
+    }
+    </style>
     <div class="container" style="margin-top: 50px">
         <div class="row">
             <div class="col-12">
@@ -13,7 +28,7 @@
                 <div class="container" style="display: flex" >
                     {% for food in object_list %}
                         <div class="col-md-3">
-                            <div class="card" style="width: 18rem;box-shadow: 0 0 15px rgba(0,0,0,0.45); background-color: #fd7e14;color: aliceblue">
+                            <div class="card" id ="food">
                             <img src="{{ food.img }}" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">{{ food.name }}</h5>

@@ -17,17 +17,34 @@
         {% endblock %}
     </title>
 </head>
+<style>
+    a {
+        color: aliceblue
+    }
+    a:hover {
+        color: #FF3500;
+    }
+</style>
 <div class="container">
-    <a class="navbar-brand" href="#">
-        <img src="https://i.ibb.co/7rpnP9s/kisspng-pizza-logo-logo-pizza-5b32fba839b7c9-8832278915300678802364.png"
-             alt="pizza-logo" width="120" height="120" class="d-inline-block align-top">
-    </a>
+    <div class="col-12" style="display: flex; margin-bottom: auto">
+        <div>
+            <a class="navbar-brand" href="#">
+                <img src="https://i.ibb.co/7rpnP9s/kisspng-pizza-logo-logo-pizza-5b32fba839b7c9-8832278915300678802364.png"
+                     alt="pizza-logo" width="120" height="120" class="d-inline-block align-top">
+            </a>
+        </div>
+        <div class="navbar-brand" style="margin-top: 12px">
+            <h4 class="display-3">
+                PIZZA
+            </h4>
+        </div>
+    </div>
     <nav class="nav navbar-expand-lg navbar navbar-dark justify-content-center  flex-column flex-sm-row"
-         style="background-color: #fd7e14; font-size: 26px; border-radius: 40px; box-shadow: 0 0 15px rgba(0,0,0,0.45);margin-top: 50px">
-            <a class="flex-sm-fill text-sm-center nav-link active" aria-current="page" style="color: aliceblue" href="#">Active</a>
-            <a class="flex-sm-fill text-sm-center nav-link" style="color: aliceblue" href="#">Longer nav link</a>
-            <a class="flex-sm-fill text-sm-center nav-link" style="color: aliceblue" href="#">Link</a>
-            <a class="flex-sm-fill text-sm-center nav-link disabled" style="color: aliceblue" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+         style="background-color: #fd7e14; font-size: 26px; border-radius: 40px; box-shadow: 0 0 15px rgba(0,0,0,0.45);margin-top: 30px">
+        <a class="flex-sm-fill text-sm-center nav-link " aria-current="page"  href="{% url 'menu:menu' %}">Меню</a>
+        <a class="flex-sm-fill text-sm-center nav-link" href="#">Longer nav link</a>
+        <a class="flex-sm-fill text-sm-center nav-link"  href="#">Link</a>
+        <a class="flex-sm-fill text-sm-center nav-link "  href="{% url 'about:about' %}">О нас</a>
     </nav>
 </div>
 <body>

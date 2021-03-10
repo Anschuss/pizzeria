@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import DetailView
+# from .models import InfoPizzerie
 
-# Create your views here.
+
+# class DetailInfoPizza(DetailView):
+#     model = InfoPizzerie
+#     template_name = 'about/about.html'
