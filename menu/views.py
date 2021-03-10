@@ -9,6 +9,6 @@ class FoodListView(ListView):
     def get_queryset(self):
         return Food.objects.select_related('composition')
 
+
 class DetailFoodView(DetailView):
     pass
-

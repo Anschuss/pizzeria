@@ -5,14 +5,15 @@ from django.db import models
 class Types(models.Model):
     """ Types of food """
     name = models.CharField(max_length=64, unique=True)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.name
 
-    def slug_generate(self):
-        slug = hashlib.sha1(self.name)
+    def save(self, **kwargs):
+        slug = hashlib.sha1(self.name.encode('utf-8'))
         self.slug = slug.hexdigest()
+        super(Types, self).save(**kwargs)
 
 
 class CompositionDish(models.Model):
@@ -29,14 +30,15 @@ class Product(models.Model):
     name = models.CharField(max_length=120, unique=True)
     price = models.PositiveIntegerField()
     img = models.TextField()
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
 
     def get_model_name(self):
         return self.__class__.__name__.lower()
 
-    def slug_generate(self):
-        slug = hashlib.sha1(self.name)
+    def save(self, **kwargs):
+        slug = hashlib.sha1(self.name.encode('utf-8'))
         self.slug = slug.hexdigest()
+        super(Product, self).save(**kwargs)
 
 
 class Food(Product):
