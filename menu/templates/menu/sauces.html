@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Напитки
+    Соусы
 {% endblock %}
 
 {% block content %}
@@ -50,7 +50,7 @@
                     <div class="list-group list-group-flush" style="border-radius: 15px">
                         <a href="{% url 'menu:menu' %}" class="list-group-item menu-list">Пицца</a>
                         <a href="{% url 'menu:drinks' %}" class="list-group-item menu-list">Напитки</a>
-                        <a href="{% url 'menu:sauces' %}" class="list-group-item menu-list">Соусы</a>
+                        <a href="#" class="list-group-item menu-list">Соусы</a>
                     </div>
 
                 </div>
@@ -59,21 +59,22 @@
                 <div class="col-lg-9">
                     <div class="row">
 
-                        {% for drink in object_list %}
+                        {% for sauce in object_list %}
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card h-100 food">
-                                    <a href="{% url 'menu:detail_drink' slug=drink.slug %}"><img class="card-img-top"
-                                                                                                 src="{{ drink.img }}"
-                                                                                                 alt=""></a>
+                                    <a href="{% url 'menu:detail_sauce' slug=sauce.slug %}">
+                                        <img class="card-img-top" src="{{ sauce.img }}" alt="">
+                                    </a>
                                     <div class="card-body">
                                         <h4 class="card-title">
-                                            <a href="{% url 'menu:detail_drink' slug=drink.slug %}"
-                                               style="color: aliceblue">{{ drink.name }}</a>
+                                            <a href="{% url 'menu:detail_sauce' slug=sauce.slug %}"
+                                               style="color: aliceblue">{{ sauce.name }}</a>
                                         </h4>
+                                        <p class="card-text">{{ sauce.composition }}</p>
                                     </div>
                                     <div class="card-footer">
-                                        <h5>{{ drink.price }} ₸</h5>
-                                        <h4>{{ drink.size }} Л</h4>
+                                        <h5>{{ sauce.price }} ₸</h5>
+                                        <h4>{{ sauce.size }} Л</h4>
                                     </div>
                                 </div>
                             </div>

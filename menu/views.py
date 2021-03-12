@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import Food, Drinks
+from .models import Food, Drinks, Sauces
 
 
 class FoodListView(ListView):
@@ -10,16 +10,26 @@ class FoodListView(ListView):
         return Food.objects.select_related('composition')
 
 
-class DetailFoodView(DetailView):
-    model = Food
-    template_name = 'menu/pizza.html'
-
-
 class DrinksListView(ListView):
     model = Drinks
     template_name = 'menu/drinks.html'
 
 
+class SaucesListView(ListView):
+    model = Sauces
+    template_name = 'menu/sauces.html'
+
+
+class DetailFoodView(DetailView):
+    model = Food
+    template_name = 'menu/pizza_detail.html'
+
+
 class DetailDrinkView(DetailView):
     model = Drinks
-    template_name = 'menu/drink.html'
+    template_name = 'menu/drink_detail.html'
+
+
+class DetailSauceView(DetailView):
+    model = Sauces
+    template_name = 'menu/sauce_detail.html'
