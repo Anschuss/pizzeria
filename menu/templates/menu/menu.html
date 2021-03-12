@@ -5,17 +5,19 @@
 
 {% block content %}
     <style>
-        .menu-list{
+        .menu-list {
             background-color: #fd7e14;
             transition: .1s ease-out;
             transition-delay: 0.1s;
         }
+
         .menu-list:hover {
             background-color: aliceblue;
             color: #fd7e14;
             transition: .1s ease-out;
             transition-delay: 0.2s;
         }
+
         .food {
             width: 18rem;
             color: aliceblue;
@@ -39,9 +41,9 @@
 
                 <h1 class="my-4">Shop Name</h1>
                 <div class="list-group list-group-flush" style="border-radius: 15px">
-                    <a href="#" class="list-group-item menu-list">Category 1</a>
-                    <a href="#" class="list-group-item menu-list">Category 2</a>
-                    <a href="#" class="list-group-item menu-list">Category 3</a>
+                    <a href="{% url 'menu:menu' %}" class="list-group-item menu-list">Пицца</a>
+                    <a href="{% url 'menu:drinks' %}" class="list-group-item menu-list">Напитки</a>
+                    <a href="#" class="list-group-item menu-list">Соусы</a>
                 </div>
 
             </div>
@@ -57,7 +59,9 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active">
-                            <img class="d-block img-fluid" src="https://sketchfab.com/blogs/community/wp-content/uploads/2016/10/image03-1.png" alt="First slide">
+                            <img class="d-block img-fluid"
+                                 src="https://sketchfab.com/blogs/community/wp-content/uploads/2016/10/image03-1.png"
+                                 alt="First slide">
                         </div>
                     </div>
                 </div>
@@ -67,7 +71,8 @@
                     {% for food in object_list %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100 food">
-                                <a href="{% url 'menu:detail' slug=food.slug %}"><img class="card-img-top" src="{{ food.img }}" alt=""></a>
+                                <a href="{% url 'menu:detail' slug=food.slug %}"><img class="card-img-top"
+                                                                                      src="{{ food.img }}" alt=""></a>
                                 <div class="card-body">
                                     <h4 class="card-title">
                                         <a href="#" style="color: aliceblue">{{ food.name }}</a>

@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import Food
+from .models import Food, Drinks
 
 
 class FoodListView(ListView):
@@ -13,3 +13,13 @@ class FoodListView(ListView):
 class DetailFoodView(DetailView):
     model = Food
     template_name = 'menu/pizza.html'
+
+
+class DrinksListView(ListView):
+    model = Drinks
+    template_name = 'menu/drinks.html'
+
+
+class DetailDrinkView(DetailView):
+    model = Drinks
+    template_name = 'menu/drink.html'

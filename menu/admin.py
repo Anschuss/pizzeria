@@ -9,7 +9,7 @@ class FoodAdmin(admin.ModelAdmin):
 
 class DrinkAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'slug')
-    fields = ['name', 'size']
+    fields = ['name', 'size', 'price', 'img']
 
 class SaucesAdmin(admin.ModelAdmin):
     list_display = ('name', 'composition', 'price', 'slug')
