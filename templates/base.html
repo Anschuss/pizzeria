@@ -18,11 +18,6 @@
     </title>
 </head>
 <style>
-    #number {
-        font-size: 32px;
-        font-family: "Ubuntu Mono";
-    }
-
     a {
         color: aliceblue;
         text-decoration: none;
@@ -49,7 +44,7 @@
     </div>
     <nav class="nav navbar-expand-lg navbar navbar-dark justify-content-center  flex-column flex-sm-row"
          style="background-color: #fd7e14; font-size: 26px; border-radius: 40px; box-shadow: 0 0 15px rgba(0,0,0,0.45);margin-top: 30px">
-        <a class="flex-sm-fill text-sm-center nav-link " aria-current="page" href="{% url 'menu:menu' %}">Меню</a>
+        <a class="flex-sm-fill text-sm-center nav-link " aria-current="page" href="{% url 'menu:general' %}">Меню</a>
         <a class="flex-sm-fill text-sm-center nav-link" href="#">Longer nav link</a>
         <a class="flex-sm-fill text-sm-center nav-link" href="#">Link</a>
         <a class="flex-sm-fill text-sm-center nav-link " href="{% url 'about:about' %}">О нас</a>

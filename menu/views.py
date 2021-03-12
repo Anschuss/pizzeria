@@ -1,13 +1,21 @@
-from django.views.generic import ListView, DetailView
-from .models import Food, Drinks, Sauces
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView, View
+from .models import Pizza, Drinks, Sauces, LatestFood
 
 
-class FoodListView(ListView):
-    model = Food
-    template_name = "menu/menu.html"
+class GeneralView(View):
+
+    def get(self, request, *args, **kwargs):
+        food = LatestFood.object.get_food_for_main_page('pizza', 'sauces')
+        return render(request, 'menu/menu.html', {'food': food})
+
+
+class PizzaListView(ListView):
+    model = Pizza
+    template_name = "menu/pizza.html"
 
     def get_queryset(self):
-        return Food.objects.select_related('composition')
+        return Pizza.objects.select_related('composition')
 
 
 class DrinksListView(ListView):
@@ -20,8 +28,8 @@ class SaucesListView(ListView):
     template_name = 'menu/sauces.html'
 
 
-class DetailFoodView(DetailView):
-    model = Food
+class DetailPizzaView(DetailView):
+    model = Pizza
     template_name = 'menu/pizza_detail.html'
 
 

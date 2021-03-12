@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 
-class FoodAdmin(admin.ModelAdmin):
+class PizzaAdmin(admin.ModelAdmin):
     list_display = ('name', 'composition', 'price', 'slug')
     fields = ['name', 'price', 'img', 'composition', 'description', 'weight']
 
@@ -18,6 +18,6 @@ class SaucesAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CompositionDish)
-admin.site.register(Food, FoodAdmin)
+admin.site.register(Pizza, PizzaAdmin)
 admin.site.register(Drinks, DrinkAdmin)
 admin.site.register(Sauces, SaucesAdmin)

@@ -41,7 +41,7 @@
 
                 <h1 class="my-4">Shop Name</h1>
                 <div class="list-group list-group-flush" style="border-radius: 15px">
-                    <a href="{% url 'menu:menu' %}" class="list-group-item menu-list">Пицца</a>
+                    <a href="{% url "menu:pizza" %}" class="list-group-item menu-list">Пицца</a>
                     <a href="{% url 'menu:drinks' %}" class="list-group-item menu-list">Напитки</a>
                     <a href="{% url 'menu:sauces' %}" class="list-group-item menu-list">Соусы</a>
                 </div>
@@ -68,19 +68,25 @@
 
                 <div class="row">
 
-                    {% for food in object_list %}
+                    {% for elm in food %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100 food">
-                                <a href="{% url 'menu:detail' slug=food.slug %}"><img class="card-img-top"
-                                                                                      src="{{ food.img }}" alt=""></a>
+                                {% if elm.description %}
+                                    <a href="{% url 'menu:detail' slug=elm.slug %}"><img class="card-img-top"
+                                                                                         src="{{ elm.img }}" alt=""></a>
+                                {% else %}
+                                    <a href="{% url 'menu:detail_sauce' slug=elm.slug %}"><img class="card-img-top"
+                                                                                         src="{{ elm.img }}" alt=""></a>
+                                                                                         src="{{ elm.img }}" alt=""></a>
+                                {% endif %}
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        <a href="#" style="color: aliceblue">{{ food.name }}</a>
+                                        <a href="#" style="color: aliceblue">{{ elm.name }}</a>
                                     </h4>
-                                    <p class="card-text">{{ food.composition }}</p>
+                                    <p class="card-text">{{ elm.composition }}</p>
                                 </div>
                                 <div class="card-footer">
-                                    <h5>{{ food.price }} ₸</h5>
+                                    <h5>{{ elm.price }} ₸</h5>
                                 </div>
                             </div>
                         </div>

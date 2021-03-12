@@ -6,8 +6,26 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 User = get_user_model()
 
+
+class LatestFoodManager:
+
+    @staticmethod
+    def get_food_for_main_page(*args, **kwargs):
+        food = []
+        ct_models = ContentType.objects.filter(model__in=args)
+        for ct_model in ct_models:
+            model_food = ct_model.model_class()._base_manager.all().order_by('-id')
+            food.extend(model_food)
+        return food
+
+
+class LatestFood:
+    object = LatestFoodManager
+
+
 class Types(models.Model):
     pass
+
 
 class CompositionDish(models.Model):
     text = models.TextField()
@@ -34,7 +52,7 @@ class Product(models.Model):
         super(Product, self).save(**kwargs)
 
 
-class Food(Product):
+class Pizza(Product):
     composition = models.OneToOneField(CompositionDish, on_delete=models.CASCADE, blank=True)
     description = models.TextField()
     weight = models.FloatField()
