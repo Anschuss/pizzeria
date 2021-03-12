@@ -11,4 +11,5 @@ class FoodListView(ListView):
 
 
 class DetailFoodView(DetailView):
-    pass
+    model = Food
+    template_name = 'menu/pizza.html'

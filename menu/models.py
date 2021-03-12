@@ -2,20 +2,6 @@ import hashlib
 from django.db import models
 
 
-class Types(models.Model):
-    """ Types of food """
-    name = models.CharField(max_length=64, unique=True)
-    slug = models.SlugField(unique=True)
-
-    def __str__(self):
-        return self.name
-
-    def save(self, **kwargs):
-        slug = hashlib.sha1(self.name.encode('utf-8'))
-        self.slug = slug.hexdigest()
-        super(Types, self).save(**kwargs)
-
-
 class CompositionDish(models.Model):
     text = models.TextField()
 

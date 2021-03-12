@@ -1,7 +1,8 @@
-from django.views.generic import DetailView
-# from .models import InfoPizzerie
+from django.views.generic import ListView
+from .models import InfoPizzeria
 
 
-# class DetailInfoPizza(DetailView):
-#     model = InfoPizzerie
-#     template_name = 'about/about.html'
+class InfoPizzeria(ListView):
+    model = InfoPizzeria
+    template_name = 'about/about.html'
+
