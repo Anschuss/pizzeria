@@ -56,7 +56,8 @@ class CategoryDetailView(CartMixin, CategoryDetailMixin, ListView):
     slug_url_kwarg = 'slug'
 
     def get(self, request, *args, **kwargs):
-        food = LatestFood.object.get_food_for_main_page(self.model)
+        food = LatestFood.object.get_food_for_main_page(kwargs['ct_model'])
+        print(food)
         return render(request, 'menu/category_detail.html', {'food': food})
 
 
