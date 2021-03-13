@@ -3,53 +3,64 @@ from django.views.generic import ListView, DetailView, View
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 
-from .models import Pizza, Drinks, Sauces, LatestFood, CartFood, Cart, Customer
-from .mixins import CartMixin
+from .models import Pizza, Drinks, Sauces, \
+    LatestFood, CartFood, Cart, Customer, Category
+from .mixins import CartMixin, CategoryDetailMixin
 from .utils import recalc_cart
 
 
 class GeneralView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
         food = LatestFood.object.get_food_for_main_page('pizza', 'sauces')
+        print(categories)
         context = {
+            'categories': categories,
             'food': food,
             'cart': self.cart,
         }
         return render(request, 'menu/menu.html', context)
 
 
-class PizzaListView(ListView):
-    model = Pizza
-    template_name = "menu/pizza.html"
+class FoodDetailView(CartMixin, DetailView):
+    CT_MODEL_MODEL_CLASS = {
+        'pizza': Pizza,
+        'drinks': Drinks,
+        'sauces': Sauces,
+    }
 
-    def get_queryset(self):
-        return Pizza.objects.select_related('composition')
+    def dispatch(self, request, *args, **kwargs):
+        self.model = self.CT_MODEL_MODEL_CLASS[kwargs['ct_model']]
+        self.queryset = self.model._base_manager.all()
+        return super().dispatch(request, *args, **kwargs)
 
-
-class DrinksListView(ListView):
-    model = Drinks
-    template_name = 'menu/drinks.html'
-
-
-class SaucesListView(ListView):
-    model = Sauces
-    template_name = 'menu/sauces.html'
-
-
-class DetailPizzaView(DetailView):
-    model = Pizza
-    template_name = 'menu/pizza_detail.html'
+    context_object_name = 'food'
+    template_name = 'menu/food_detail.html'
+    slug_url_kwarg = 'slug'
 
 
-class DetailDrinkView(DetailView):
-    model = Drinks
-    template_name = 'menu/drink_detail.html'
+class CategoryDetailView(CartMixin, CategoryDetailMixin, DetailView):
+    CT_MODEL_MODEL_CLASS = {
+        'pizza': Pizza,
+        'drinks': Drinks,
+        'sauces': Sauces,
+    }
 
+    model = Category
+    queryset = Category.objects.all()
+    context_object_name = 'category'
+    template_name = 'menu/category_detail.html'
 
-class DetailSauceView(DetailView):
-    model = Sauces
-    template_name = 'menu/sauce_detail.html'
+    def dispatch(self, request, *args, **kwargs):
+        self.model = self.CT_MODEL_MODEL_CLASS[kwargs['ct_model']]
+        self.queryset = self.model._base_manager.all()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = self.cart
+        return context
 
 
 class AddCartView(CartMixin, View):
@@ -67,7 +78,7 @@ class AddCartView(CartMixin, View):
         return HttpResponseRedirect('/cart/')
 
 
-class CartView(CartMixin,View):
+class CartView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
         return render(request, 'menu/cart.html', {'cart': self.cart})

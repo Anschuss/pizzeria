@@ -37,13 +37,15 @@
 
         <div class="row">
 
+
             <div class="col-lg-3">
 
                 <h1 class="my-4">Shop Name</h1>
                 <div class="list-group list-group-flush" style="border-radius: 15px">
-                    <a href="{% url "menu:pizza" %}" class="list-group-item menu-list">Пицца</a>
-                    <a href="{% url 'menu:drinks' %}" class="list-group-item menu-list">Напитки</a>
-                    <a href="{% url 'menu:sauces' %}" class="list-group-item menu-list">Соусы</a>
+                    {% for category in categories %}
+                        <a href="{% url 'menu:category_detail' ct_model=category.model_name slug=category.slug %}"
+                           class="list-group-item menu-list">{{ category.name }}</a>
+                    {% endfor %}
                 </div>
 
             </div>
@@ -71,14 +73,8 @@
                     {% for elm in food %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100 food">
-                                {% if elm.description %}
-                                    <a href="{% url 'menu:detail' ct_model=elm.get_model_name slug=elm.slug %}"><img class="card-img-top"
-                                                                                         src="{{ elm.img }}" alt=""></a>
-                                {% else %}
-                                    <a href="{% url 'menu:detail_sauce' ct_model=elm.get_model_name slug=elm.slug %}"><img class="card-img-top"
-                                                                                         src="{{ elm.img }}" alt=""></a>
-
-                                {% endif %}
+                                    <a href="{{ elm.get_absolute_url }}"><img class="card-img-top"
+                                                    src="{{ elm.img }}" alt=""></a>
                                 <div class="card-body">
                                     <h4 class="card-title">
                                         <a href="#" style="color: aliceblue">{{ elm.name }}</a>

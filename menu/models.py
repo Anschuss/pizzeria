@@ -3,8 +3,13 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.urls import reverse
 
 User = get_user_model()
+
+
+def get_model_for_count(*model_names):
+    return [models.Count(model_name) for model_name in model_names]
 
 
 class LatestFoodManager:
@@ -23,17 +28,50 @@ class LatestFood:
     object = LatestFoodManager
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=32, unique=True)
+class ClassOfClass(models.Model):
+    class Meta:
+        abstract = True
+
+    name = models.CharField(max_length=120, unique=True)
     slug = models.SlugField(unique=True)
 
-    def __str__(self):
-        return self.name
+    def get_model_name(self):
+        return self.__class__.__name__.lower()
 
     def save(self, **kwargs):
         slug = hashlib.sha1(self.name.encode('utf-8'))
         self.slug = slug.hexdigest()
-        super(Category, self).save(**kwargs)
+        super(ClassOfClass, self).save(**kwargs)
+
+
+class CategoryManager(models.Manager):
+    CATEGORY_NAME_COUNT_NAME = {
+        'pizza': 'pizza__count',
+        'drinks': 'drinks__count',
+        'sauces': 'sauces__count',
+    }
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+    def get_categories_for_left_sidebar(self):
+        models = get_model_for_count('pizza', 'drinks', 'sauces')
+        qs = list(self.get_queryset().annotate(*models))
+        data = [
+            dict(name=c.name, url=c.get_absolute_url(), count=getattr(c, self.CATEGORY_NAME_COUNT_NAME[c.name]))
+            for c in qs
+        ]
+        print(data)
+        return data
+
+
+class Category(ClassOfClass):
+    model_name = models.CharField(max_length=32, blank=True, null=True)
+    slug = models.SlugField(unique=True)
+    objects = CategoryManager()
+
+    def __str__(self):
+        return self.name
 
 
 class CompositionDish(models.Model):
@@ -43,23 +81,13 @@ class CompositionDish(models.Model):
         return self.text
 
 
-class Product(models.Model):
+class Product(ClassOfClass):
     class Meta:
         abstract = True
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.CharField(max_length=120, unique=True)
     price = models.PositiveIntegerField()
     img = models.TextField()
-    slug = models.SlugField(unique=True)
-
-    def get_model_name(self):
-        return self.__class__.__name__.lower()
-
-    def save(self, **kwargs):
-        slug = hashlib.sha1(self.name.encode('utf-8'))
-        self.slug = slug.hexdigest()
-        super(Product, self).save(**kwargs)
 
 
 class Pizza(Product):
@@ -70,12 +98,18 @@ class Pizza(Product):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('menu:food_detail', kwargs={'ct_model': 'pizza', 'slug': self.slug})
+
 
 class Drinks(Product):
     size = models.FloatField()
 
     def __str__(self):
         return f"{self.name}, {self.price}"
+
+    def get_absolute_url(self):
+        return reverse('menu:food_detail', kwargs={'ct_model': 'drinks', 'slug': self.slug})
 
 
 class Sauces(Product):
@@ -84,6 +118,9 @@ class Sauces(Product):
 
     def __str__(self):
         return f"{self.name}, {self.price}"
+
+    def get_absolute_url(self):
+        return reverse('menu:food_detail', kwargs={'ct_model': 'sauces', 'slug': self.slug})
 
 
 ## Order models
@@ -99,6 +136,10 @@ class CartFood(models.Model):
 
     def __str__(self):
         return f"Чек:{self.content_objcet}"
+
+    def save(self, *args, **kwargs):
+        self.final_price = self.qty * self.content_objcet.price
+        super().save(*args, **kwargs)
 
 
 class Cart(models.Model):

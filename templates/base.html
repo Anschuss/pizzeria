@@ -49,8 +49,8 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'menu:cart' %}">Корзина <span
-                            class="badge badge-pill badge-danger">{{ cart.products.count }}</span></a>
+                    {#                    <a class="nav-link" href="{% url 'menu:cart' %}">Корзина <span#}
+                    {#                            class="badge badge-pill badge-danger">{{ cart.products.count }}</span></a>#}
                 </li>
             </ul>
         </div>
@@ -58,8 +58,20 @@
     </nav>
 </div>
 <body>
-{% block content %}
-{% endblock %}
+<div class="list-group list-group-flush" style="border-radius: 15px">
+    {% for category in menu.categories %}
+        <div class="col-lg-3 mt-5">
+        <div class="list-group">
+            {% for category in menu.catigories %}
+                <a href="{{ category.url }}" class="list-group-item">{{ category.name }} ({{ category.count }})</a>
+            {% endfor %}
+        </div>
+
+    {% endfor %}
+    </div>
+
+    {% block content %}
+    {% endblock %}
 
 </body>
 </html>

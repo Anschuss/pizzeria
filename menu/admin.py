@@ -4,8 +4,8 @@ from .models import *
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
-    fields = ['name']
+    list_display = ('name', 'slug', 'model_name')
+    fields = ['name', 'model_name']
 
 
 class PizzaAdmin(admin.ModelAdmin):
