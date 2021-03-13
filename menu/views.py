@@ -40,27 +40,24 @@ class FoodDetailView(CartMixin, DetailView):
     slug_url_kwarg = 'slug'
 
 
-class CategoryDetailView(CartMixin, CategoryDetailMixin, DetailView):
+class CategoryDetailView(CartMixin, CategoryDetailMixin, ListView):
     CT_MODEL_MODEL_CLASS = {
         'pizza': Pizza,
         'drinks': Drinks,
         'sauces': Sauces,
     }
 
-    model = Category
-    queryset = Category.objects.all()
-    context_object_name = 'category'
-    template_name = 'menu/category_detail.html'
-
     def dispatch(self, request, *args, **kwargs):
         self.model = self.CT_MODEL_MODEL_CLASS[kwargs['ct_model']]
         self.queryset = self.model._base_manager.all()
         return super().dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['cart'] = self.cart
-        return context
+    context_object_name = 'food'
+    slug_url_kwarg = 'slug'
+
+    def get(self, request, *args, **kwargs):
+        food = LatestFood.object.get_food_for_main_page(self.model)
+        return render(request, 'menu/category_detail.html', {'food': food})
 
 
 class AddCartView(CartMixin, View):
