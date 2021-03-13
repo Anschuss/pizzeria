@@ -8,7 +8,9 @@ urlpatterns = [
     path('pizza/', PizzaListView.as_view(), name='pizza'),
     path('drinks/', DrinksListView.as_view(), name='drinks'),
     path('sauces/', SaucesListView.as_view(), name='sauces'),
-    path('pizza/<str:slug>/', DetailPizzaView.as_view(), name='detail'),
-    path('drinks/<str:slug>/', DetailDrinkView.as_view(), name='detail_drink'),
-    path('sauces/<str:slug>/', DetailSauceView.as_view(), name='detail_sauce')
+    path('pizza/<str:ct_model>/<str:slug>/', DetailPizzaView.as_view(), name='detail'),
+    path('drinks/<str:ct_model>/<str:slug>/', DetailDrinkView.as_view(), name='detail_drink'),
+    path('sauces/<str:slug>/', DetailSauceView.as_view(), name='detail_sauce'),
+    path('cart/', CartView.as_view(), name='cart'),
+    path('add_to_cart/<str:ct_model>/<str:slug>/', AddCartView.as_view(), name='add_to_cart')
 ]

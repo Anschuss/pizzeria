@@ -23,8 +23,17 @@ class LatestFood:
     object = LatestFoodManager
 
 
-class Types(models.Model):
-    pass
+class Category(models.Model):
+    name = models.CharField(max_length=32, unique=True)
+    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, **kwargs):
+        slug = hashlib.sha1(self.name.encode('utf-8'))
+        self.slug = slug.hexdigest()
+        super(Category, self).save(**kwargs)
 
 
 class CompositionDish(models.Model):
@@ -38,6 +47,7 @@ class Product(models.Model):
     class Meta:
         abstract = True
 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=120, unique=True)
     price = models.PositiveIntegerField()
     img = models.TextField()
@@ -92,7 +102,7 @@ class CartFood(models.Model):
 
 
 class Cart(models.Model):
-    # owner = models.ForeignKey('Customer', null=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey('Customer', null=True, on_delete=models.CASCADE)
     food = models.ManyToManyField(CartFood, blank=True, related_name='related_cart')
     total_food = models.PositiveIntegerField(default=0)
     final_price = models.DecimalField(max_digits=9, decimal_places=2)
