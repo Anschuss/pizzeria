@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  pg:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: pizzeria
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data/pgdata:/vat/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"

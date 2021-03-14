@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+    <style>
+        span {
+            color: #fd7e14;
+        }
+
+        .list-group-item {
+            border: none;
+            font-size: 16px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+        .display-5 {
+            margin-top: 20px;
+        }
+
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="display-5">
+                    О нас
+                </h3>
+            </div>
+            {% for object in object_list %}
+                <div class="col-12">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                                <span> Адрес:</span> {{ object.address }}
+                        </li>
+                        <li class="list-group-item">
+                                <span> Номер пиццерии:</span> {{ object.phone_number_pizzeria }}
+                        </li>
+                        <li class="list-group-item">
+                                <span> Номер Службы контроля качества:</span> {{ object.phone_number_control }}
+                        </li>
+                        <li class="list-group-item">
+                            <span>E-mail:</span> {{ object.email }}
+                        </li>
+                        <li class="list-group-item">
+                            <div class="col-12"><span>О нас</span></div>
+                            <div class="col-md-8" style="margin-bottom: 100px">
+                                {{ object.text }}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
