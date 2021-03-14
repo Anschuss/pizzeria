@@ -10,6 +10,7 @@ pillow = "*"
 django-debug-toolbar = "*"
 setuptools = "*"
 django-uuslug = "*"
+django-crispy-forms = "*"
 
 [dev-packages]
 

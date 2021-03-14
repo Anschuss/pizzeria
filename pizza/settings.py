@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     ## other app
     'debug_toolbar',
+    'crispy_forms',
     ## my app
     'menu',
     'about',
@@ -130,3 +131,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

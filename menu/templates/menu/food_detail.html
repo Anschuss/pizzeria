@@ -27,9 +27,9 @@
                     <h4 style="color: #fd7e14">
                         {{ food.price }} <strong>₸</strong>
                     </h4>
-                    {#                    <a href="{% url 'menu:add_to_cart' ct_model=ct_model slug=pizza.slug %}">#}
-                    {#                        <button class="btn btn-danger">Добавить в корзину</button>#}
-                    {#                    </a>#}
+                    <a href="{% url 'menu:add_to_cart' ct_model=food.category.model_name slug=food.slug %}">
+                        <button class="btn btn-danger">Добавить в корзину</button>
+                    </a>
                 </div>
             </div>
         </div>
