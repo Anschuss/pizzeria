@@ -14,7 +14,6 @@ class InfoPizzeria(models.Model):
 
 
 class UserMessage(models.Model):
-    name = models.CharField(max_length=64)
     email = models.CharField(max_length=64)
     phone_number = models.CharField(max_length=32)
     message = models.TextField()
